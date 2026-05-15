@@ -1,2 +1,256 @@
 CREATE DATABASE QLNT;
 USE QLNT;
+
+CREATE TABLE KHUVUC (
+    MaKV VARCHAR(10) PRIMARY KEY,
+    TenKV NVARCHAR(50),
+    SoLuongCanBoQL SMALLINT
+);
+
+CREATE TABLE QUANNGUC (
+    MaQuanNguc VARCHAR(10) PRIMARY KEY,
+    TenQuanNguc NVARCHAR(50),
+    NgaySinh DATE,
+    GioiTinh NVARCHAR(5),
+    DiaChi NVARCHAR(100),
+    SoDienThoai VARCHAR(10),
+    Email VARCHAR(50),
+    MaKV VARCHAR(10),
+    NgayNhanChuc DATE,
+    Luong DECIMAL(10,2),
+    ChucVu NVARCHAR(30),
+    TrangThai NVARCHAR(50),
+
+    CONSTRAINT FK_QUANNGUC_KHUVUC
+        FOREIGN KEY (MaKV)
+        REFERENCES KHUVUC(MaKV)
+);
+
+CREATE TABLE PHONGGIAM (
+    MaPhong VARCHAR(10) PRIMARY KEY,
+    MaKV VARCHAR(10),
+    MaQuanNguc VARCHAR(10),
+    SucChua INT,
+    TrangThai NVARCHAR(40),
+    LoaiPhong NVARCHAR(5),
+    SoLuongHienTai INT,
+    GhiChu NVARCHAR(20),
+
+    CONSTRAINT FK_PHONGGIAM_KHUVUC
+        FOREIGN KEY (MaKV)
+        REFERENCES KHUVUC(MaKV),
+
+    CONSTRAINT FK_PHONGGIAM_QUANNGUC
+        FOREIGN KEY (MaQuanNguc)
+        REFERENCES QUANNGUC(MaQuanNguc)
+);
+
+CREATE TABLE TUNHAN (
+    MaTuNhan VARCHAR(10) PRIMARY KEY,
+    SoCCCD VARCHAR(12),
+    HoTen NVARCHAR(100),
+    NgaySinh DATE,
+    GioiTinh NVARCHAR(5),
+    DiaChi NVARCHAR(100),
+    NgayXuatTrai DATE,
+    MaPhong VARCHAR(10),
+    MaBanAn VARCHAR(10),
+    TrangThai NVARCHAR(20),
+    MucDoNguyHiem NVARCHAR(20),
+    GhiChu NVARCHAR(20),
+
+    CONSTRAINT FK_TUNHAN_PHONGGIAM
+        FOREIGN KEY (MaPhong)
+        REFERENCES PHONGGIAM(MaPhong)
+);
+
+CREATE TABLE THANNHAN (
+    MaThanNhan VARCHAR(10) PRIMARY KEY,
+    MaTuNhan VARCHAR(10),
+    SoCCCD VARCHAR(12),
+    HoTenThanNhan NVARCHAR(100),
+    NgaySinh DATE,
+    GioiTinh NVARCHAR(5),
+    DiaChi NVARCHAR(100),
+    SoDienThoai VARCHAR(10),
+    Email VARCHAR(50),
+    QuanHe NVARCHAR(20),
+    GhiChu NVARCHAR(50),
+    TrangThai NVARCHAR(50),
+
+    CONSTRAINT FK_THANNHAN_TUNHAN
+        FOREIGN KEY (MaTuNhan)
+        REFERENCES TUNHAN(MaTuNhan)
+);
+
+CREATE TABLE BANAN (
+    MaBanAn VARCHAR(10) PRIMARY KEY,
+    MaTuNhan VARCHAR(10),
+    NgayPhamToi DATE,
+    AnTich NVARCHAR(20),
+    LanhAn NVARCHAR(20),
+    ToiDanh NVARCHAR(20),
+    MucAn NVARCHAR(20),
+    NgayTuyenAn DATE,
+    NgayBatDauThiHanhAn DATE,
+    NgayKetThucDuKien DATE,
+    TinhTrangAnTich NVARCHAR(20),
+
+    CONSTRAINT FK_BANAN_TUNHAN
+        FOREIGN KEY (MaTuNhan)
+        REFERENCES TUNHAN(MaTuNhan)
+);
+
+CREATE TABLE TOIDANH (
+    MaToiDanh VARCHAR(10) PRIMARY KEY,
+    TenToiDanh NVARCHAR(20),
+    MoTa NVARCHAR(100),
+    KhungHinhPhat NVARCHAR(20)
+);
+
+CREATE TABLE BANAN_TOIDANH (
+    MaBanAn VARCHAR(10),
+    MaToiDanh VARCHAR(10),
+    MucAn NVARCHAR(20),
+    GhiChu NVARCHAR(20),
+
+    CONSTRAINT PK_BANAN_TOIDANH
+        PRIMARY KEY (MaBanAn, MaToiDanh),
+
+    CONSTRAINT FK_BANAN_TOIDANH_BANAN
+        FOREIGN KEY (MaBanAn)
+        REFERENCES BANAN(MaBanAn),
+
+    CONSTRAINT FK_BANAN_TOIDANH_TOIDANH
+        FOREIGN KEY (MaToiDanh)
+        REFERENCES TOIDANH(MaToiDanh)
+);
+
+CREATE TABLE CONGVIEC (
+    MaCongViec VARCHAR(10) PRIMARY KEY,
+    TenCongViec NVARCHAR(50),
+    SoLuongToiDa INT,
+    MoTa NVARCHAR(100),
+    MucDoNguyHiem NVARCHAR(20),
+    MaQuanNguc VARCHAR(10),
+    TrangThai NVARCHAR(20),
+
+    CONSTRAINT FK_CONGVIEC_QUANNGUC
+        FOREIGN KEY (MaQuanNguc)
+        REFERENCES QUANNGUC(MaQuanNguc)
+);
+
+CREATE TABLE CAITAO (
+    MaTuNhan VARCHAR(10),
+    MaCongViec VARCHAR(10),
+    NgayThucHien DATE,
+    KetQua NVARCHAR(20),
+    MaQuanNgucPhuTrach VARCHAR(10),
+    GhiChu NVARCHAR(20),
+    DanhGia BIT,
+
+    CONSTRAINT PK_CAITAO
+        PRIMARY KEY (MaTuNhan, MaCongViec),
+
+    CONSTRAINT FK_CAITAO_TUNHAN
+        FOREIGN KEY (MaTuNhan)
+        REFERENCES TUNHAN(MaTuNhan),
+
+    CONSTRAINT FK_CAITAO_CONGVIEC
+        FOREIGN KEY (MaCongViec)
+        REFERENCES CONGVIEC(MaCongViec),
+
+    CONSTRAINT FK_CAITAO_QUANNGUC
+        FOREIGN KEY (MaQuanNgucPhuTrach)
+        REFERENCES QUANNGUC(MaQuanNguc)
+);
+
+CREATE TABLE THAMNUOI (
+    MaTuNhan VARCHAR(10),
+    MaThanNhan VARCHAR(10),
+    NgayTham DATE,
+    GioVao TIME,
+    GioRa TIME,
+    NoiDungThamNuoi NVARCHAR(100),
+    TrangThai NVARCHAR(20),
+    MaQuanNgucDuyet VARCHAR(10),
+
+    CONSTRAINT PK_THAMNUOI
+        PRIMARY KEY (MaTuNhan, MaThanNhan),
+
+    CONSTRAINT FK_THAMNUOI_TUNHAN
+        FOREIGN KEY (MaTuNhan)
+        REFERENCES TUNHAN(MaTuNhan),
+
+    CONSTRAINT FK_THAMNUOI_THANNHAN
+        FOREIGN KEY (MaThanNhan)
+        REFERENCES THANNHAN(MaThanNhan),
+
+    CONSTRAINT FK_THAMNUOI_QUANNGUC
+        FOREIGN KEY (MaQuanNgucDuyet)
+        REFERENCES QUANNGUC(MaQuanNguc)
+);
+
+CREATE TABLE LICHSUCHUYENPHONG (
+    MaLichSu VARCHAR(10) PRIMARY KEY,
+    MaTuNhan VARCHAR(10),
+    MaPhongCu VARCHAR(10),
+    MaPhongMoi VARCHAR(10),
+    NgayChuyen DATE,
+    LiDo NVARCHAR(100),
+
+    CONSTRAINT FK_LSCP_TUNHAN
+        FOREIGN KEY (MaTuNhan)
+        REFERENCES TUNHAN(MaTuNhan),
+
+    CONSTRAINT FK_LSCP_PHONGCU
+        FOREIGN KEY (MaPhongCu)
+        REFERENCES PHONGGIAM(MaPhong),
+
+    CONSTRAINT FK_LSCP_PHONGMOI
+        FOREIGN KEY (MaPhongMoi)
+        REFERENCES PHONGGIAM(MaPhong)
+);
+
+CREATE TABLE VIPHAMKYLUAT (
+    MaViPham VARCHAR(10) PRIMARY KEY,
+    MaTuNhan VARCHAR(10),
+    NgayViPham DATE,
+    NoiDung NVARCHAR(100),
+    HinhThucXuLy NVARCHAR(50),
+    GhiChu NVARCHAR(20),
+
+    CONSTRAINT FK_VIPHAMKYLUAT_TUNHAN
+        FOREIGN KEY (MaTuNhan)
+        REFERENCES TUNHAN(MaTuNhan)
+);
+
+CREATE TABLE TAIKHOAN (
+    MaTaiKhoan VARCHAR(10) PRIMARY KEY,
+    TenDangNhap VARCHAR(20),
+    MatKhau VARCHAR(20),
+    VaiTro NVARCHAR(20),
+    MaQuanNguc VARCHAR(10),
+    TrangThai NVARCHAR(20),
+
+    CONSTRAINT FK_TAIKHOAN_QUANNGUC
+        FOREIGN KEY (MaQuanNguc)
+        REFERENCES QUANNGUC(MaQuanNguc)
+);
+
+CREATE TABLE LICHTHAMNUOI (
+    MaLich VARCHAR(10) PRIMARY KEY,
+    MaTuNhan VARCHAR(10),
+    MaThanNhan VARCHAR(10),
+    NgayHen DATE,
+    TrangThai NVARCHAR(20),
+    GhiChu NVARCHAR(20),
+
+    CONSTRAINT FK_LICHTHAMNUOI_TUNHAN
+        FOREIGN KEY (MaTuNhan)
+        REFERENCES TUNHAN(MaTuNhan),
+
+    CONSTRAINT FK_LICHTHAMNUOI_THANNHAN
+        FOREIGN KEY (MaThanNhan)
+        REFERENCES THANNHAN(MaThanNhan)
+);
