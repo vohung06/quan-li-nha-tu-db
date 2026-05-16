@@ -1,12 +1,9 @@
 --3.d.	Truy vấn lớn nhất, nhỏ nhất: 4 câu (4 đ) (Vũ)
---1. Tù nhân lớn tuổi nhất
-SELECT *
+--1. Tìm thông tin Tù nhân lớn tuổi nhất trong nhà tù
+SELECT TOP 1 *
 FROM TUNHAN
-WHERE NgaySinh = (
-    SELECT MIN(NgaySinh)
-    FROM TUNHAN
-);
-
+ORDER BY NgaySinh ASC;
+--2. Quản ngục có lương cao nhất
 
 
 
