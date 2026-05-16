@@ -1,5 +1,5 @@
 ﻿--Cau 4: Stored Procedure - Tìm danh sách tù nhân theo giới tính 
-CREATE PROC sp_gioitinh_select @GioiTinh NVARCHAR(5)
+CREATE PROC sp_gioitinh_select @GioiTinh nvarchar(5)
 AS BEGIN 
 	SELECT MaTuNhan, SoCCCD, HoTen, GioiTinh
 	FROM TUNHAN
@@ -25,3 +25,20 @@ END;
 sp_tunhan_select;
 
 --Cau 4: Function - Tìm những quản ngục có mức lương cao hơn mức lương cần tìm
+CREATE FUNCTION fn_quannguc_select (@Luong decimal(10,2)) RETURNS 
+@RETURNTABLE TABLE 
+	(
+		MaQuanNguc varchar(10),
+		TenQuanNguc nvarchar(100),
+		Luong decimal(10,2)
+	)
+AS BEGIN
+    INSERT INTO @RETURNTABLE
+    SELECT MaQuanNguc, TenQuanNguc, Luong
+    FROM QUANNGUC
+    WHERE Luong > @Luong 
+    RETURN
+END;
+
+SELECT * FROM dbo.fn_quannguc_select (13000000) ORDER BY Luong ASC;
+
