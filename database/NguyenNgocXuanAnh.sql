@@ -58,4 +58,29 @@ END;
 
 SELECT * FROM dbo.fn_quannguc_select (13000000) ORDER BY Luong ASC;
 
---Cau 4: Trigger - Khi thêm vào bảng CONGVIEC: SoLuongToiDa phải >=4 và <=10
+--Cau 4: Trigger - Khi thêm vào bảng CONGVIEC: SoLuongToiDa phải >=4 và <=15
+IF EXISTS (SELECT name FROM sysobjects 
+           WHERE name = 'tr_congviec_insert' AND type = 'tr')
+    DROP TRIGGER tr_congviec_insert
+GO
+	CREATE TRIGGER tr_congviec_insert 
+ON CONGVIEC
+FOR INSERT
+AS BEGIN
+    IF EXISTS (
+        SELECT 1 
+        FROM inserted 
+        WHERE SoLuongToiDa NOT BETWEEN 4 AND 15
+    )
+    BEGIN
+        RAISERROR (N'Số lượng tối đa phải >= 4 và <= 15', 16, 1)
+        ROLLBACK
+        RETURN
+    END
+END;
+
+INSERT INTO [CONGVIEC] ([MaCongViec], [TenCongViec], [SoLuongToiDa], [MoTa], [MucDoNguyHiem], [MaQuanNguc], [TrangThai])
+VALUES
+('CV009', N'Giặc và cấp phát đồ dùng', 8,N'Giặc và sấy đồ, sau khi xong cấp phát đến tủ đồ các phòng giam',N'Thấp', 'QN05', N'Đang hoạt động');
+
+SELECT * FROM CONGVIEC;
