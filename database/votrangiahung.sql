@@ -19,7 +19,16 @@ JOIN THAMNUOI TNU ON TNU.MaTuNhan = TN.MaTuNhan
 GROUP BY TN.MaTuNhan, TN.HoTen
 HAVING MAX(TNU.NgayTham) >= '2026-01-01';
 
-
+--3. Tìm thông tin quản ngục phụ trách quản lí nhiều buổi cải tạo nhất
+SELECT QN.MaQuanNguc, QN.TenQuanNguc, COUNT(*) AS SoBuoiPhuTrach
+FROM QUANNGUC QN
+JOIN CAITAO CT ON CT.MaQuanNgucPhuTrach = QN.MaQuanNguc
+GROUP BY QN.MaQuanNguc, QN.TenQuanNguc
+HAVING COUNT(*) >= ALL (
+	SELECT COUNT(*)
+	FROM CAITAO
+	GROUP BY CAITAO.MaQuanNgucPhuTrach
+);
 
 --Truy vấn sử dụng phép chia (4 câu)
 --Thủ tục (1 câu)
