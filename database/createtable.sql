@@ -88,7 +88,7 @@ CREATE TABLE BANAN (
     NgayPhamToi DATE,
     AnTich NVARCHAR(20),
     LanhAn NVARCHAR(20),
-    ToiDanh NVARCHAR(20),
+    ToiDanh NVARCHAR(40),
     MucAn NVARCHAR(20),
     NgayTuyenAn DATE,
     NgayBatDauThiHanhAn DATE,
@@ -102,9 +102,9 @@ CREATE TABLE BANAN (
 
 CREATE TABLE TOIDANH (
     MaToiDanh VARCHAR(10) PRIMARY KEY,
-    TenToiDanh NVARCHAR(20),
+    TenToiDanh NVARCHAR(40),
     MoTa NVARCHAR(100),
-    KhungHinhPhat NVARCHAR(20)
+    KhungHinhPhat NVARCHAR(40)
 );
 
 CREATE TABLE BANAN_TOIDANH (
@@ -149,7 +149,7 @@ CREATE TABLE CAITAO (
     DanhGia BIT,
 
     CONSTRAINT PK_CAITAO
-        PRIMARY KEY (MaTuNhan, MaCongViec),
+        PRIMARY KEY (MaTuNhan, MaCongViec, NgayThucHien),
 
     CONSTRAINT FK_CAITAO_TUNHAN
         FOREIGN KEY (MaTuNhan)
@@ -175,7 +175,7 @@ CREATE TABLE THAMNUOI (
     MaQuanNgucDuyet VARCHAR(10),
 
     CONSTRAINT PK_THAMNUOI
-        PRIMARY KEY (MaTuNhan, MaThanNhan),
+        PRIMARY KEY (MaTuNhan, MaThanNhan, NgayTham),
 
     CONSTRAINT FK_THAMNUOI_TUNHAN
         FOREIGN KEY (MaTuNhan)
