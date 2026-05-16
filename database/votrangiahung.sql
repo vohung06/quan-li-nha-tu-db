@@ -5,6 +5,15 @@
 USE QLNT;
 
 --Truy vấn với mệnh đề having (5 câu)
+--1. Tìm những tù nhân có từ 2 thân nhân trở lên
+SELECT TN.MaTuNhan, TN.HoTen, COUNT(TNH.MaThanNhan) AS SoLuongThanNhan
+FROM TUNHAN TN
+JOIN THANNHAN TNH ON TNH.MaTuNhan = TN.MaTuNhan
+GROUP BY TN.MaTuNhan, TN.HoTen
+HAVING COUNT(TNH.MaThanNhan) >= 2;
+
+
+
 --Truy vấn sử dụng phép chia (4 câu)
 --Thủ tục (1 câu)
 --Hàm (2 câu)
