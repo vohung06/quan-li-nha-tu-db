@@ -30,6 +30,20 @@ HAVING COUNT(*) >= ALL (
 	GROUP BY CAITAO.MaQuanNgucPhuTrach
 );
 
+--4. Tìm tù nhân có số lần vi phạm lớn hơn trung bình số lần vi phạm của các tù nhân khác.
+SELECT MaTuNhan, COUNT(*) AS SoLanViPham
+FROM VIPHAMKYLUAT
+GROUP BY MaTuNhan
+HAVING COUNT(*) > (
+	SELECT AVG(SoLan)
+	FROM (
+		SELECT COUNT(*) AS SoLan
+		FROM VIPHAMKYLUAT
+		GROUP BY MaTuNhan
+	) AS TB
+);
+
+
 --Truy vấn sử dụng phép chia (4 câu)
 --Thủ tục (1 câu)
 --Hàm (2 câu)
