@@ -1,9 +1,9 @@
-﻿﻿--Cau 3: b.Truy vấn: Truy vấn với Aggregate Functions (7 câu), e. Truy vấn không/chưa có (NOT IN/ LEFT JOIN -RIGHT JOIN) (5 câu)
---Cau 4: Tạo 2 thủ tục, 2 hàm, 1 trigger
---Cau 5: Tạo 1 người dùng và cấp quyền 
+﻿﻿--Câu 3: b.Truy vấn: Truy vấn với Aggregate Functions (7 câu), e. Truy vấn không/chưa có (NOT IN/ LEFT JOIN -RIGHT JOIN) (5 câu)
+--Câu 4: Tạo 2 thủ tục, 2 hàm, 1 trigger
+--Câu 5: Tạo 1 người dùng và cấp quyền 
 USE QLNT;
 
---Cau 3b:
+--Câu 3b:
 --1/ Tính tuổi trung bình của các tù nhân đang thi hành án - AVG 
 SELECT AVG(DATEDIFF(YEAR, TN.NgaySinh, GETDATE())) AS TuoiTrungBinhToanTrai
 FROM TUNHAN TN
@@ -47,7 +47,7 @@ FROM (
     GROUP BY MaTuNhan
 ) AS BangTam;
 
--- Cau 3e:
+-- Câu 3e:
 --1/ Liệt kê danh sách các quản ngục (Mã, Tên, Chức vụ) không thuộc các khu vực quản lý là 'KVA' và 'KVB'.
 SELECT MaQuanNguc, TenQuanNguc, ChucVu 
 FROM QUANNGUC 
@@ -78,7 +78,7 @@ WHERE TN.MaTuNhan NOT IN (
     WHERE CT.DanhGia = N'Kém' AND CT.DanhGia = N'Trung bình' AND CT.DanhGia = N'Khá'
 );
 
---Cau 4: Stored Procedure - Tìm danh sách tù nhân theo giới tính 
+--Câu 4: Stored Procedure - Tìm danh sách tù nhân theo giới tính 
 CREATE PROC sp_gioitinh_select @GioiTinh nvarchar(5)
 AS BEGIN 
 	SELECT MaTuNhan, SoCCCD, HoTen, GioiTinh
@@ -89,7 +89,7 @@ END;
 sp_gioitinh_select Nữ;
 sp_gioitinh_select Nam;
 
---Cau 4: Stored Procedure - Tìm thông tin tù nhân ở tù sớm nhất 
+--Câu 4: Stored Procedure - Tìm thông tin tù nhân ở tù sớm nhất 
 CREATE PROC sp_tunhan_select 
 AS BEGIN 
 	DECLARE @max int;
@@ -104,7 +104,7 @@ END;
 
 sp_tunhan_select;
 
---Cau 4: Function - Cho biết số lượng phòng giam theo mã khu vực 
+--Câu 4: Function - Cho biết số lượng phòng giam theo mã khu vực 
 CREATE FUNCTION fn_soluong_select (@MaKV varchar(10)) 
 RETURNS int
 AS BEGIN
@@ -120,7 +120,7 @@ SELECT N'Số phòng giam khu B là:' AS ThongBao, dbo.fn_soluong_select ('KVB')
 SELECT N'Số phòng giam khu C là:' AS ThongBao, dbo.fn_soluong_select ('KVC') AS SoLuong;
 SELECT N'Số phòng giam khu D là:' AS ThongBao, dbo.fn_soluong_select ('KVD') AS SoLuong;
 
---Cau 4: Function - Tìm những quản ngục có mức lương cao hơn mức lương cần tìm
+--Câu 4: Function - Tìm những quản ngục có mức lương cao hơn mức lương cần tìm
 CREATE FUNCTION fn_quannguc_select (@Luong decimal(10,2)) RETURNS 
 @RETURNTABLE TABLE 
 	(
@@ -138,7 +138,7 @@ END;
 
 SELECT * FROM dbo.fn_quannguc_select (13000000) ORDER BY Luong ASC;
 
---Cau 4: Trigger - Khi thêm vào bảng CONGVIEC: SoLuongToiDa phải >=4 và <=15
+--Câu 4: Trigger - Khi thêm vào bảng CONGVIEC: SoLuongToiDa phải >=4 và <=15
 IF EXISTS (SELECT name FROM sysobjects 
            WHERE name = 'tr_congviec_insert' AND type = 'tr')
     DROP TRIGGER tr_congviec_insert
@@ -165,4 +165,4 @@ VALUES
 
 SELECT * FROM CONGVIEC;
 
-
+--Câu 5: Tạo 1 người dùng và cấp quyền
