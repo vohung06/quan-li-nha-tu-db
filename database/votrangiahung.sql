@@ -176,4 +176,33 @@ END;
 
 INSERT INTO LICHTHAMNUOI([MaLich], [MaTuNhan], [MaThanNhan], [NgayHen], [TrangThai], [GhiChu])
 VALUES ('LT021', 'TN018', 'TNH031', '2026-12-01', N'Chưa duyệt', NULL);
+
+--2. Tạo trigger sao cho: Khi ngày hiện tại lớn hơn ngày kết thúc bản án, tự động cập nhật giá trị cho tù nhân được ra tù.
+IF EXISTS (SELECT NAME FROM SYSOBJECTS
+WHERE NAME = 'trg_CapNhatRaTu' AND TYPE = 'tr')
+DROP TRIGGER trg_CapNhatRaTu
+GO
+CREATE TRIGGER trg_CapNhatRaTu
+ON BANAN
+FOR INSERT, UPDATE
+AS
+BEGIN
+	UPDATE TN
+	SET TN.NgayXuatTrai = GETDATE(), 
+		TN.TrangThai = N'Đã mãn hạn',
+		TN.MaPhong = NULL
+	FROM TUNHAN TN
+	JOIN inserted i ON i.MaTuNhan = TN.MaTuNhan
+	WHERE GETDATE() > i.NgayKetThucDuKien
+END;
+
+BEGIN TRAN
+UPDATE BANAN
+SET NgayKetThucDuKien = '2026-01-01'
+WHERE MaTuNhan = 'TN001';
+
+SELECT *
+FROM TUNHAN
+WHERE MaTuNhan = 'TN001';
+ROLLBACK;
 --Tạo 1 người dùng và cấp quyền
