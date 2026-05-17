@@ -1,10 +1,10 @@
 ﻿-- Cau 3e:
---1/ Liệt kê các tù nhân có tuổi thuộc tập hợp {29, 36, 44}
-SELECT * FROM TUNHAN 
-WHERE datediff(year, NgaySinh, getdate()) in (29, 36, 44)
+--1/ Liệt kê các quản ngục có tuổi không thuộc tập hợp {36, 40, 43}
+SELECT * FROM QUANNGUC 
+WHERE datediff(year, NgaySinh, getdate()) not in (36, 40, 43)
 ORDER BY NgaySinh DESC;
 
-
+--2/ 
 --Cau 4: Stored Procedure - Tìm danh sách tù nhân theo giới tính 
 CREATE PROC sp_gioitinh_select @GioiTinh nvarchar(5)
 AS BEGIN 
