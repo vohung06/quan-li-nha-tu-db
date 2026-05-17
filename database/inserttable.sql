@@ -307,6 +307,7 @@ VALUES
 ('TN029','CV001','2024-04-14',N'Hoàn thành','QN18',N'Chấp hành nghiêm túc',N'Tốt'),
 ('TN029','CV008','2026-03-25',N'Không hoàn thành','QN07',N'Thiếu hợp tác',N'Kém'),
 ('TN029','CV006','2025-05-05',N'Hoàn thành','QN06',N'Có cải thiện',N'Khá'),
+('TN030','CV004','2023-06-20',N'Hoàn thành','QN06',N'Tích cực',N'Tốt'),
 ('TN030','CV001','2023-09-29',N'Hoàn thành','QN06',N'Tích cực',N'Tốt'),
 ('TN030','CV003','2024-06-10',N'Hoàn thành','QN19',N'Hoàn thành tốt',N'Tốt'),
 ('TN030','CV005','2024-08-07',N'Hoàn thành','QN07',N'Có trách nhiệm',N'Khá'),
