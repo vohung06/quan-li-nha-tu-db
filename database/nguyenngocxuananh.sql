@@ -1,4 +1,18 @@
-﻿drop database QLNT;
+﻿--Cau 3b:
+--1/ Tìm tù nhân có mức án tù lớn nhất 
+SELECT TN.MaTuNhan, TN.HoTen, BA.ToiDanh, BA.NgayKetThucDuKien
+FROM BANAN BA
+JOIN TUNHAN TN ON TN.MaTuNhan = BA.MaTuNhan
+WHERE datediff(year, BA.NgayBatDauThiHanhAn, BA.NgayKetThucDuKien) = 
+      (SELECT max(datediff(year, NgayBatDauThiHanhAn, NgayKetThucDuKien)) FROM BANAN);
+
+--2/ Đếm số tội danh xuất hiện nhiều nhát -> tội phổ biến nhất 
+SELECT TD.TenToiDanh, COUNT(BATD.MaBanAn) AS TongSoLanXuatHien
+FROM TOIDANH TD
+LEFT JOIN BANAN_TOIDANH BATD ON TD.MaToiDanh = BATD.MaToiDanh
+GROUP BY TD.TenToiDanh
+ORDER BY TongSoLanXuatHien DESC;
+
 -- Cau 3e:
 --1/ Liệt kê danh sách các quản ngục (Mã, Tên, Chức vụ) không thuộc các khu vực quản lý là 'KVA' và 'KVB'.
 SELECT MaQuanNguc, TenQuanNguc, ChucVu 
