@@ -50,7 +50,7 @@ VALUES
 ('PC201','KVC','QN05',6,N'Đang sử dụng',N'Nam',2,N'Khu nam tầng 2'),
 ('PC202','KVC','QN16',6,N'Đang sử dụng',N'Nam',2,N'Khu nam tầng 2'),
 ('PC203','KVC','QN18',6,N'Trống',N'Nam',0,N'Chưa sử dụng'),
-('PD101','KVD','QN08',6,N'Đang sử dụng',N'Nam',0,N'Chưa sử dụng'),
+('PD101','KVD','QN08',6,N'Trống',N'Nam',0,N'Chưa sử dụng'),
 ('PD102','KVD','QN11',6,N'Đang sử dụng',N'Nam',2,N'Khu nam giám sát'),
 ('PD103','KVD','QN17',6,N'Đang sử dụng',N'Nam',2,N'Khu nam giám sát'),
 ('PD201','KVD','QN08',6,N'Đang sử dụng',N'Nam',1,N'Khu nam giám sát'),
