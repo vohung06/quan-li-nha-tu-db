@@ -255,7 +255,7 @@ VALUES
 ('TN008','CV001','2025-05-22',N'Hoàn thành','QN03',N'Có trách nhiệm',N'Tốt'),
 ('TN008','CV006','2025-08-16',N'Hoàn thành','QN19',N'Được đánh giá cao',N'Tốt'),
 ('TN008','CV008','2025-12-27',N'Hoàn thành','QN07',N'Làm việc chăm chỉ',N'Tốt'),
-('TN009','CV004','2025-09-18',N'Không hoàn thành','QN14',N'Thiếu tập trung',N'Trung bình'),
+('TN009','CV004','2025-09-18',N'Không hoàn thành','QN07',N'Thiếu tập trung',N'Trung bình'),
 ('TN010','CV002','2024-04-27',N'Hoàn thành','QN11',N'Đúng giờ',N'Tốt'),
 ('TN010','CV008','2026-05-09',N'Hoàn thành','QN07',N'Chấp hành tốt',N'Khá'),
 ('TN010','CV003','2025-01-11',N'Hoàn thành','QN20',N'Thái độ nghiêm túc',N'Tốt'),
@@ -271,7 +271,7 @@ VALUES
 ('TN014','CV002','2026-04-30',N'Hoàn thành','QN15',N'Làm việc đều',N'Khá'),
 ('TN014','CV005','2026-07-22',N'Không hoàn thành','QN11',N'Sức khỏe yếu',N'Trung bình'),
 ('TN014','CV008','2026-09-07',N'Hoàn thành','QN07',N'Có trách nhiệm',N'Khá'),
-('TN015','CV003','2024-05-29',N'Hoàn thành','QN14',N'Đúng quy định',N'Tốt'),
+('TN015','CV003','2024-05-29',N'Hoàn thành','QN07',N'Đúng quy định',N'Tốt'),
 ('TN016','CV001','2026-03-28',N'Hoàn thành','QN01',N'Lao động tốt',N'Tốt'),
 ('TN016','CV006','2026-08-24',N'Không hoàn thành','QN07',N'Cần nhắc nhở',N'Trung bình'),
 ('TN016','CV004','2026-12-12',N'Hoàn thành','QN06',N'Hợp tác tốt',N'Khá'),
@@ -287,7 +287,7 @@ VALUES
 ('TN020','CV006','2024-08-28',N'Hoàn thành','QN12',N'Đúng giờ',N'Tốt'),
 ('TN020','CV008','2026-04-17',N'Hoàn thành','QN07',N'Hoàn thành tốt',N'Tốt'),
 ('TN020','CV003','2025-03-06',N'Hoàn thành','QN05',N'Làm việc chăm chỉ',N'Tốt'),
-('TN021','CV002','2024-05-08',N'Hoàn thành','QN18',N'Tích cực',N'Khá'),
+('TN021','CV002','2024-05-08',N'Hoàn thành','QN07',N'Tích cực',N'Khá'),
 ('TN022','CV001','2023-04-06',N'Hoàn thành','QN07',N'Làm việc nghiêm túc',N'Tốt'),
 ('TN022','CV007','2024-09-26',N'Hoàn thành','QN09',N'Có trách nhiệm',N'Khá'),
 ('TN022','CV005','2025-04-14',N'Hoàn thành','QN03',N'Đúng quy định',N'Tốt'),
@@ -303,7 +303,7 @@ VALUES
 ('TN027','CV005','2024-08-03',N'Không hoàn thành','QN11',N'Gây mất trật tự',N'Kém'),
 ('TN027','CV007','2024-09-30',N'Hoàn thành','QN07',N'Có cải thiện',N'Khá'),
 ('TN027','CV001','2025-04-12',N'Hoàn thành','QN05',N'Lao động tốt',N'Tốt'),
-('TN028','CV002','2024-05-16',N'Hoàn thành','QN20',N'Làm việc tốt',N'Tốt'),
+('TN028','CV002','2024-05-16',N'Hoàn thành','QN07',N'Làm việc tốt',N'Tốt'),
 ('TN029','CV001','2024-04-14',N'Hoàn thành','QN18',N'Chấp hành nghiêm túc',N'Tốt'),
 ('TN029','CV008','2026-03-25',N'Không hoàn thành','QN07',N'Thiếu hợp tác',N'Kém'),
 ('TN029','CV006','2025-05-05',N'Hoàn thành','QN06',N'Có cải thiện',N'Khá'),
@@ -314,7 +314,7 @@ VALUES
 ('TN030','CV007','2025-05-09',N'Hoàn thành','QN03',N'Đúng quy định',N'Khá'),
 ('TN030','CV006','2025-10-10',N'Hoàn thành','QN10',N'Hoàn thành tốt',N'Tốt'),
 ('TN030','CV008','2026-02-28',N'Hoàn thành','QN09',N'Có trách nhiệm',N'Khá');
-
+DELETE FROM CAITAO;
 INSERT INTO [THAMNUOI] ([MaTuNhan], [MaThanNhan], [NgayTham], [GioVao], [GioRa], [NoiDungThamNuoi], [TrangThai], [MaQuanNgucDuyet])
 VALUES
 ('TN001', 'TNH001', '2016-05-18', '07:30', '08:30', N'Thăm hỏi sức khỏe', NULL, 'QN01'),
