@@ -69,7 +69,7 @@ BEGIN
 	FROM TUNHAN
 	WHERE MaTuNhan = @MaTuNhan
 	--Tạo mã lịch sử chuyển phòng mới
-	SELECT @MaLichSu = 'LS' + CAST(COUNT(*) + 1 AS VARCHAR)
+	SELECT @MaLichSu = 'LS' + RIGHT('000' + CAST(COUNT(*) + 1 AS VARCHAR), 3)
 	FROM LICHSUCHUYENPHONG
 	--Cập nhật phòng mới
 	UPDATE TUNHAN
@@ -89,6 +89,7 @@ BEGIN
 	WHERE MaPhong = @MaPhongMoi
 END;
 
+EXEC sp_ChuyenPhongTuNhan 'TN001', 'PB202', N'Chuyển sang khu mới';
 
 --Hàm (2 câu)
 --Trigger (2 câu)
