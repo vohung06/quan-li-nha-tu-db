@@ -1,17 +1,51 @@
-﻿--Cau 3b:
---1/ Tìm tù nhân có mức án tù lớn nhất 
-SELECT TN.MaTuNhan, TN.HoTen, BA.ToiDanh, BA.NgayKetThucDuKien
+﻿﻿--Cau 3: b.Truy vấn: Truy vấn với Aggregate Functions (7 câu), e. Truy vấn không/chưa có (NOT IN/ LEFT JOIN -RIGHT JOIN) (5 câu)
+--Cau 4: Tạo 2 thủ tục, 2 hàm, 1 trigger
+--Cau 5: Tạo 1 người dùng và cấp quyền 
+USE QLNT;
+
+--Cau 3b:
+--1/ Tính tuổi trung bình của các tù nhân đang thi hành án - AVG 
+SELECT AVG(DATEDIFF(YEAR, TN.NgaySinh, GETDATE())) AS TuoiTrungBinhToanTrai
+FROM TUNHAN TN
+WHERE TN.TrangThai = N'Đang thi hành án';
+
+--2/ Tìm tù nhân có mức án tù lớn nhất - MAX
+SELECT TN.MaTuNhan, TN.HoTen, BA.ToiDanh, BA.MucAn
 FROM BANAN BA
 JOIN TUNHAN TN ON TN.MaTuNhan = BA.MaTuNhan
-WHERE datediff(year, BA.NgayBatDauThiHanhAn, BA.NgayKetThucDuKien) = 
-      (SELECT max(datediff(year, NgayBatDauThiHanhAn, NgayKetThucDuKien)) FROM BANAN);
+WHERE DATEDIFF(YEAR, BA.NgayBatDauThiHanhAn, BA.NgayKetThucDuKien) = 
+      (SELECT MAX(DATEDIFF(YEAR, NgayBatDauThiHanhAn, NgayKetThucDuKien)) FROM BANAN);
 
---2/ Đếm số tội danh xuất hiện nhiều nhát -> tội phổ biến nhất 
+--3/ Đếm số tội danh xuất hiện nhiều nhất -> tội phổ biến nhất - COUNT
 SELECT TD.TenToiDanh, COUNT(BATD.MaBanAn) AS TongSoLanXuatHien
 FROM TOIDANH TD
 LEFT JOIN BANAN_TOIDANH BATD ON TD.MaToiDanh = BATD.MaToiDanh
 GROUP BY TD.TenToiDanh
 ORDER BY TongSoLanXuatHien DESC;
+
+--4/ Tìm quản ngục có số lương thấp nhất - MIN 
+SELECT QN.MaQuanNguc, QN.TenQuanNguc, QN.ChucVu, QN.Luong
+FROM QUANNGUC QN
+WHERE QN.Luong = (SELECT MIN(Luong) FROM QUANNGUC);
+
+--5/ Tính tổng sức chứa tối đa của các phòng giam từng khu vực
+SELECT PG.MaKV, SUM(PG.SucChua) AS TongSucChuaToiDa
+FROM PHONGGIAM PG
+GROUP BY PG.MaKV;
+
+--6/ Đếm số lịch thăm nuôi theo trạng thái (Đã duyệt, Chưa duyệt, Không duyệt)
+SELECT TrangThai, COUNT(*) AS SoLuongLich
+FROM LICHTHAMNUOI
+GROUP BY TrangThai
+ORDER BY SoLuongLich DESC;
+
+--7/ Tính số công việc trung bình mỗi tù nhân đã tham gia
+SELECT AVG(SoCongViec * 1.0) AS SoCongViecTrungBinh
+FROM (
+    SELECT MaTuNhan, COUNT(MaCongViec) AS SoCongViec
+    FROM CAITAO
+    GROUP BY MaTuNhan
+) AS BangTam;
 
 -- Cau 3e:
 --1/ Liệt kê danh sách các quản ngục (Mã, Tên, Chức vụ) không thuộc các khu vực quản lý là 'KVA' và 'KVB'.
@@ -59,13 +93,13 @@ sp_gioitinh_select Nam;
 CREATE PROC sp_tunhan_select 
 AS BEGIN 
 	DECLARE @max int;
-	SELECT @max = max(datediff(year, NgayBatDauThiHanhAn, getdate()))
+	SELECT @max = MAX(DATEDIFF(YEAR, NgayBatDauThiHanhAn, GETDATE()))
 	FROM BANAN 
 	WHERE NgayBatDauThiHanhAn IS NOT NULL;
 	SELECT TN.MaTuNhan, SoCCCD, HoTen, NgaySinh, GioiTinh, BA.NgayBatDauThiHanhAn
 	FROM TUNHAN TN
 	JOIN BANAN BA ON BA.MaTuNhan = TN.MaTuNhan
-	WHERE datediff(year, NgayBatDauThiHanhAn, getdate()) = @max 
+	WHERE DATEDIFF(YEAR, NgayBatDauThiHanhAn, GETDATE()) = @max 
 END;
 
 sp_tunhan_select;
