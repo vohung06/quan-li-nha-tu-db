@@ -1,20 +1,48 @@
-﻿drop database QLNT;
+﻿--Cau 3b:
+--1/ Tìm tù nhân có mức án tù lớn nhất 
+SELECT TN.MaTuNhan, TN.HoTen, BA.ToiDanh, BA.NgayKetThucDuKien
+FROM BANAN BA
+JOIN TUNHAN TN ON TN.MaTuNhan = BA.MaTuNhan
+WHERE datediff(year, BA.NgayBatDauThiHanhAn, BA.NgayKetThucDuKien) = 
+      (SELECT max(datediff(year, NgayBatDauThiHanhAn, NgayKetThucDuKien)) FROM BANAN);
+
+--2/ Đếm số tội danh xuất hiện nhiều nhát -> tội phổ biến nhất 
+SELECT TD.TenToiDanh, COUNT(BATD.MaBanAn) AS TongSoLanXuatHien
+FROM TOIDANH TD
+LEFT JOIN BANAN_TOIDANH BATD ON TD.MaToiDanh = BATD.MaToiDanh
+GROUP BY TD.TenToiDanh
+ORDER BY TongSoLanXuatHien DESC;
+
 -- Cau 3e:
 --1/ Liệt kê danh sách các quản ngục (Mã, Tên, Chức vụ) không thuộc các khu vực quản lý là 'KVA' và 'KVB'.
 SELECT MaQuanNguc, TenQuanNguc, ChucVu 
 FROM QUANNGUC 
 WHERE MaKV NOT IN ('KVA', 'KVB');
 
---2/ Liệt kê danh sách những phòng giam trống không chứa tù nhân 
+--2/ Liệt kê danh sách những phòng giam không trống -> đang được sử dụng 
 SELECT PG.MaPhong, PG.MaKV, PG.SucChua, PG.TrangThai, PG.LoaiPhong, PG.SoLuongHienTai, PG.GhiChu FROM PHONGGIAM PG
 LEFT JOIN TUNHAN TN ON TN.MaPhong = PG.MaPhong
-WHERE TN.MaTuNhan IS NULL;
+WHERE TN.MaTuNhan IS NOT NULL;
 
---3/ Liệt kê những quản ngục không quản lý phong giam nào 
+--3/ Liệt kê những quản ngục (Mã, Tên, Chức vụ) không quản lý phòng giam nào 
 SELECT QN.MaQuanNguc, QN.TenQuanNguc, QN.ChucVu
 FROM PHONGGIAM PG
 RIGHT JOIN QUANNGUC QN ON PG.MaQuanNguc = QN.MaQuanNguc
 WHERE PG.MaPhong IS NULL;
+
+--4/ Tìm tù nhân chưa từng được người thân đến thăm
+SELECT TN.MaTuNhan, TN.HoTen, TN.MucDoNguyHiem 
+FROM TUNHAN TN
+LEFT JOIN THANNHAN TNH ON  TNH.MaTuNhan = TN.MaTuNhan
+WHERE TN.MaPhong IS NOT NULL AND TNH.MaTuNhan IS NULL;
+
+--5/ Tìm danh sách những tù nhân có đánh giá tốt 
+SELECT TN.MaTuNhan, TN.HoTen
+WHERE TN.MaTuNhan NOT IN (
+	SELECT CT.MaTuNhan
+    FROM CAITAO CT 
+    WHERE CT.DanhGia = N'Kém' AND CT.DanhGia = N'Trung bình' AND CT.DanhGia = N'Khá'
+);
 
 --Cau 4: Stored Procedure - Tìm danh sách tù nhân theo giới tính 
 CREATE PROC sp_gioitinh_select @GioiTinh nvarchar(5)
