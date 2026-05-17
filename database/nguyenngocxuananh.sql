@@ -16,7 +16,7 @@ JOIN TUNHAN TN ON TN.MaTuNhan = BA.MaTuNhan
 WHERE DATEDIFF(YEAR, BA.NgayBatDauThiHanhAn, BA.NgayKetThucDuKien) = 
       (SELECT MAX(DATEDIFF(YEAR, NgayBatDauThiHanhAn, NgayKetThucDuKien)) FROM BANAN);
 
---3/ Đếm số tội danh xuất hiện nhiều nhất -> tội phổ biến nhất - COUNT
+--3/ Đếm số lần các tội danh mà tù nhân phạm tội -> để xem tội phổ biến nhất - COUNT
 SELECT TD.TenToiDanh, COUNT(BATD.MaBanAn) AS TongSoLanXuatHien
 FROM TOIDANH TD
 LEFT JOIN BANAN_TOIDANH BATD ON TD.MaToiDanh = BATD.MaToiDanh
