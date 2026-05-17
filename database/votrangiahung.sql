@@ -92,5 +92,17 @@ END;
 EXEC sp_ChuyenPhongTuNhan 'TN001', 'PB202', N'Chuyển sang khu mới';
 
 --Hàm (2 câu)
+--1. Xây dựng hàm trả về một bảng bao gồm thông tin các phòng giam còn chỗ trống
+CREATE FUNCTION fn_PHONGGIAM_ConCho()
+RETURNS TABLE
+AS
+RETURN (
+	SELECT MaPhong, SucChua, SoLuongHienTai, (SucChua - SoLuongHienTai) AS ChoTrong
+	FROM PHONGGIAM
+	WHERE SoLuongHienTai < SucChua
+);
+
+SELECT * 
+FROM dbo.fn_PHONGGIAM_ConCho();
 --Trigger (2 câu)
 --Tạo 1 người dùng và cấp quyền
