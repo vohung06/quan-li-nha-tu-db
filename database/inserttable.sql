@@ -35,11 +35,11 @@ VALUES
 ('PA101','KVA','QN09',6,N'Đang sử dụng',N'Nữ',2,N'Khu nữ tầng 1'),
 ('PA102','KVA','QN14',6,N'Đang sử dụng',N'Nữ',2,N'Khu nữ tầng 1'),
 ('PA103','KVA','QN20',6,N'Trống',N'Nữ',0,N'Chưa sử dụng'),
-('PA201','KVA','QN02',6,N'Đang sử dụng',N'Nữ',2,N'Khu nữ tầng 2'),
+('PA201','KVA','QN02',6,N'Đang sử dụng',N'Nữ',1,N'Khu nữ tầng 2'),
 ('PA202','KVA','QN09',6,N'Trống',N'Nữ',0,N'Chưa sử dụng'),
 ('PA203','KVA','QN14',6,N'Trống',N'Nữ',0,N'Chưa sử dụng'),
 ('PB101','KVB','QN10',6,N'Đang sử dụng',N'Nữ',2,N'Khu nữ giám sát'),
-('PB102','KVB','QN13',6,N'Đang sử dụng',N'Nữ',2,N'Khu nữ giám sát'),
+('PB102','KVB','QN13',6,N'Đang sử dụng',N'Nữ',1,N'Khu nữ giám sát'),
 ('PB103','KVB','QN19',6,N'Trống',N'Nữ',0,N'Chưa sử dụng'),
 ('PB201','KVB','QN04',6,N'Đang sử dụng',N'Nữ',1,N'Còn trống nhiều chỗ'),
 ('PB202','KVB','QN10',6,N'Đang sử dụng',N'Nữ',0,N'Kho chứa dụng cụ'),
@@ -50,11 +50,11 @@ VALUES
 ('PC201','KVC','QN05',6,N'Đang sử dụng',N'Nam',2,N'Khu nam tầng 2'),
 ('PC202','KVC','QN16',6,N'Đang sử dụng',N'Nam',2,N'Khu nam tầng 2'),
 ('PC203','KVC','QN18',6,N'Trống',N'Nam',0,N'Chưa sử dụng'),
-('PD101','KVD','QN08',6,N'Đang sử dụng',N'Nam',2,N'Khu nam giám sát'),
+('PD101','KVD','QN08',6,N'Đang sử dụng',N'Nam',0,N'Chưa sử dụng'),
 ('PD102','KVD','QN11',6,N'Đang sử dụng',N'Nam',2,N'Khu nam giám sát'),
 ('PD103','KVD','QN17',6,N'Đang sử dụng',N'Nam',2,N'Khu nam giám sát'),
-('PD201','KVD','QN08',6,N'Đang sử dụng',N'Nam',4,N'Khu nam giám sát'),
-('PD202','KVD','QN11',6,N'Đang sửa chữa',N'Nam',0,N'Còn trống nhiều chỗ'),
+('PD201','KVD','QN08',6,N'Đang sử dụng',N'Nam',1,N'Khu nam giám sát'),
+('PD202','KVD','QN11',6,N'Đang sửa chữa',N'Nam',0,N'Chưa sử dụng'),
 ('PD203','KVD','QN17',6,N'Đang sửa chữa',N'Nam',0,N'Chưa sử dụng');
 
 INSERT INTO [TUNHAN] ([MaTuNhan], [SoCCCD], [HoTen], [NgaySinh], [GioiTinh], [DiaChi], [NgayXuatTrai], [MaPhong], [TrangThai], [MucDoNguyHiem], [GhiChu])
