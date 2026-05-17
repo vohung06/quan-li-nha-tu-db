@@ -92,5 +92,35 @@ END;
 EXEC sp_ChuyenPhongTuNhan 'TN001', 'PB202', N'Chuyển sang khu mới';
 
 --Hàm (2 câu)
+--1. Xây dựng hàm trả về danh sách phòng giam thuộc một khu vực được truyền vào
+CREATE FUNCTION fn_PHONGGIAM_TheoKV (@MaKV VARCHAR(10))
+RETURNS TABLE
+AS
+RETURN (
+	SELECT MaPhong, MaKV, SucChua, SoLuongHienTai, TrangThai
+	FROM PHONGGIAM
+	WHERE MaKV = @MaKV
+);
+
+SELECT *
+FROM dbo.fn_PHONGGIAM_TheoKV('KVB');
+
+--2. xây dựng hàm trả về bảng bao gồm thông tin của tội danh và số lượng tù nhân mang tội danh đó
+CREATE FUNCTION fn_TOIDANH_ThongKe()
+RETURNS @KetQua
+TABLE (MaToiDanh VARCHAR(10), TenToiDanh NVARCHAR(40), SoLuongTuNhan INT)
+AS
+BEGIN
+	INSERT INTO @KetQua
+	SELECT TD.MaToiDanh, TD.TenToiDanh, COUNT(DISTINCT BA.MaTuNhan) AS SoLuongTuNhan
+	FROM TOIDANH TD
+	JOIN BANAN_TOIDANH BT ON BT.MaToiDanh = TD.MaToiDanh
+	JOIN BANAN BA ON BA.MaBanAn = BT.MaBanAn
+	GROUP BY TD.MaToiDanh, TD.TenToiDanh
+	RETURN
+END;
+
+SELECT *
+FROM dbo.fn_TOIDANH_ThongKe();
 --Trigger (2 câu)
 --Tạo 1 người dùng và cấp quyền
