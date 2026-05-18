@@ -74,18 +74,19 @@ WHERE NOT EXISTS (
 	)
 );
 
---3. Tìm quản ngục từng quản lý tất cả tù nhân có án chung thân.
+--3. Tìm quản ngục từng quản lý phòng của tất cả tù nhân nam có mức án tỪ 15 năm trở lên.
 SELECT QN.MaQuanNguc
 FROM QUANNGUC QN
 WHERE NOT EXISTS (
     SELECT *
     FROM BANAN BA
-    WHERE DATEDIFF(YEAR, BA.NgayBatDauThiHanhAn, BA.NgayKetThucDuKien) > 20
+	JOIN TUNHAN TN ON TN.MaTuNhan = BA.MaTuNhan
+    WHERE TN.GioiTinh = N'Nam' AND DATEDIFF(YEAR, BA.NgayBatDauThiHanhAn, BA.NgayKetThucDuKien) >= 15
       AND NOT EXISTS (
           SELECT *
-          FROM CAITAO CT
-          WHERE CT.MaQuanNgucPhuTrach = QN.MaQuanNguc
-            AND CT.MaTuNhan = BA.MaTuNhan
+          FROM PHONGGIAM PG
+          WHERE PG.MaQuanNguc = QN.MaQuanNguc
+            AND PG.MaPhong = TN.MaPhong
       )
 );
 
